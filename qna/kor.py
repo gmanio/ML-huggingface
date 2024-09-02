@@ -1,15 +1,15 @@
-import os
-
-os.environ["CURL_CA_BUNDLE"] = ""
-
-os.environ["HTTP_PROXY"] = "http://127.0.0.1:7890"
-os.environ["HTTPS_PROXY"] = "http://127.0.0.1:7890"
-os.environ["ALL_PROXY"] = "socks5://127.0.0.1:7890"
-
 from transformers import pipeline
+import torch
+           
+qa_model = pipeline(                                          
+    "question-answering",
+    "timpal0l/mdeberta-v3-base-squad2",                                                                                                                                                                        
+    device=torch.device("cuda")
+)
+# qa_model.to(device)
+# pipe = qa_model.to("cuda")
 
-qa_model = pipeline("question-answering", "timpal0l/mdeberta-v3-base-squad2")
-question = "긴급배치한곳은?"
+question = "평균응급의료기관 병상수는?"
 context = """(서울=연합뉴스) 성서호 기자 = 전국 곳곳에서 응급실 운영에 차질이 빚어지는 가운데 정부가 이달 4일부터 군의관과 공중보건의사(공보의)를 진료 제한 응급실에 긴급 배치한다.
 박민수 보건복지부 제2차관은 2일 정부세종청사에서 연 응급의료 등 비상진료 대응 관련 브리핑에서 "응급의료 대책을 차질 없이 이행하겠다"며 이렇게 밝혔다.
 복지부는 이날을 시작으로 비상진료 대응 브리핑을 매일 열어 응급실 관련 사안을 안내할 계획이다.
@@ -19,4 +19,5 @@ context = """(서울=연합뉴스) 성서호 기자 = 전국 곳곳에서 응급
 정부는 전반적인 응급의료 역량을 볼 때 일각에서 제기하는 '응급실 붕괴' 상황은 아니라고 판단했다.
 복지부에 따르면 전체 409개의 응급실 중 99%인 406곳은 24시간 운영 중이고, 27곳(6.6%)은 병상을 축소해 운영 중이다.
 지난달 30일 기준 응급의료기관 병상은 5천918개로, 평시인 2월 1주 6천69개의 97.5%에 해당한다."""
-qa_model(question=question, context=context)
+result = qa_model(question=question, context=context)
+print(result)
