@@ -22,9 +22,9 @@ sft_config = SFTConfig(
         "torch_dtype": "bfloat16",
     },
     # max_seq_length=256,
-    output_dir="./dist",
+    output_dir="/tmp",
     packing=False,
-    num_train_epochs=10
+    num_train_epochs=10,
 )
 
 trainer = SFTTrainer(
@@ -32,7 +32,6 @@ trainer = SFTTrainer(
     train_dataset=dataset,
     args=sft_config,
     formatting_func=formatting_prompts_func,
-    
 )
 
 trainer.train()

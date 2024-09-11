@@ -1,10 +1,3 @@
-import os
-
-os.environ["CURL_CA_BUNDLE"] = ""
-os.environ["HTTP_PROXY"] = "http://127.0.0.1:7890"
-os.environ["HTTPS_PROXY"] = "http://127.0.0.1:7890"
-os.environ["ALL_PROXY"] = "socks5://127.0.0.1:7890"
-
 from diffusers import StableDiffusion3Pipeline
 import torch
 
