@@ -16,8 +16,8 @@ pipe = pipe.to(mps_device)
 image = pipe(
     "a super car looks like lamborghini, purple color, nice mupler, great tire with black wheel",
     negative_prompt="",
-    num_inference_steps=20,
-    guidance_scale=7.0,
+    num_inference_steps=30,
+    guidance_scale=7.5,
     height=1024,
     width=1024,
 ).images[0]

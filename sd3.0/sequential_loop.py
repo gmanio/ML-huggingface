@@ -54,9 +54,18 @@ prompts = [
 
 UeroPrompts = [
     # 'A charming cobblestone street in a historic European town, lined with centuries-old buildings adorned with vibrant flower boxes and wrought-iron balconies. The street is quiet and peaceful, with warm light spilling from vintage street lamps. The atmosphere is nostalgic and inviting, with a sense of history and timelessness.'
-    "Imagine a grand and majestic painting inspired by the Joseon Dynasty's traditional art style"
+    "Large Tornado, Art by Simon Stalenhag",
+    "Large Tornado, Art by Raphael Lacoste",
+    "Large Tornado, Art by Greg Rutkowski",
+    "Large Tornado, Art by Roberto Ferri",
 ]
 
+ArchitectPrompts = [
+    "Interior, Art by Le Corbusier",
+    "Interior, Art by Frank Lloyd Wright",
+    "Interior, Art by Mies van der Rohe",
+    "Interior, Art by Walter Adolph Georg Gropius",
+]
 
 from diffusers import StableDiffusion3Pipeline
 import torch
@@ -75,7 +84,8 @@ pipe = StableDiffusion3Pipeline.from_pretrained(
     tokenizer_3=None,
     torch_dtype=torch.float16,
 )
-pipe = pipe.to("cuda")
+# pipe = pipe.to("cuda") // for cuda
+pipe = pipe.to("mps")
 
 
 async def do_work(index, prompt):
@@ -86,17 +96,23 @@ async def do_work(index, prompt):
         image = pipe(
             prompt,
             negative_prompt="",
-            num_inference_steps=50,
+            num_inference_steps=30,
             guidance_scale=7.5,
             height=1024,
             width=1024,
         ).images[0]
 
-        image.save( str(now.strftime('%Y%m%d%H%M%S')) + "_" + str(prompt).replace(" ", "+") + ".png")
+        image.save(
+            str(now.strftime("%Y%m%d%H%M%S"))
+            + "_"
+            + str(prompt).replace(" ", "+")
+            + ".png"
+        )
 
     print(f"{prompt, index} 완료")
 
-'''
+
+"""
 
 prompt = ["a photograph of an astronaut riding a horse"]
 
@@ -110,14 +126,15 @@ guidance_scale = 7.5                # Scale for classifier-free guidance
 generator = torch.manual_seed(0)    # Seed generator to create the inital latent noise
 
 batch_size = len(prompt)
-'''
+"""
+
 
 async def sequential_loop():
     # 작업을 하나씩 차례로 실행합니다.
     # for name, delay in tasks:
     #     await do_work(name, delay)
 
-    for index, propmt in enumerate(UeroPrompts):
+    for index, propmt in enumerate(ArchitectPrompts):
         await do_work(index, propmt)
 
 
