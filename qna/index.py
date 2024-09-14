@@ -10,3 +10,4 @@ QA_input = {
     "context": "The option to convert models between FARM and transformers gives freedom to the user and let people easily switch between frameworks.",
 }
 res = nlp(QA_input)
+                                               
