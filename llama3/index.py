@@ -43,4 +43,5 @@ outputs = pipeline(
     messages,
     max_new_tokens=256,
 )
+
 print(outputs[0]["generated_text"][-1])

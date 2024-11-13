@@ -61,10 +61,10 @@ UeroPrompts = [
 ]
 
 ArchitectPrompts = [
-    "Interior, Art by Le Corbusier",
-    "Interior, Art by Frank Lloyd Wright",
-    "Interior, Art by Mies van der Rohe",
-    "Interior, Art by Walter Adolph Georg Gropius",
+    "one bad room Interior, Art by Le Corbusier",
+    "one bad room Interior, Art by Frank Lloyd Wright",
+    "one bad room Interior, Art by Mies van der Rohe",
+    "one bad room Interior, Art by Walter Adolph Georg Gropius",
 ]
 
 from diffusers import StableDiffusion3Pipeline

@@ -42,6 +42,7 @@ def main():
         # print("ask question?")
         question = input()
         input_message = HumanMessage(content=question)
+        print(input_message)
 
         if question == "":
             print("exit!")
