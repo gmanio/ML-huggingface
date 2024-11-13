@@ -1,4 +1,3 @@
-import os
 import torch
 from datasets import load_dataset
 
@@ -7,8 +6,6 @@ from transformers import (
     AutoTokenizer,
     BitsAndBytesConfig,
     TrainingArguments,
-    pipeline,
-    logging,
 )
 from peft import LoraConfig
 from trl import SFTTrainer
@@ -58,7 +55,7 @@ tokenizer.pad_token = tokenizer.eos_token
 tokenizer.padding_side = "right"
 
 training_params = TrainingArguments(
-    output_dir="/results",
+    output_dir="./results",
     num_train_epochs=1,  # epoch는 1로 설정
     max_steps=100,  # max_steps을 5000으로 설정
     per_device_train_batch_size=1,
@@ -94,7 +91,7 @@ trainer = SFTTrainer(
     train_dataset=dataset,
     peft_config=peft_params,
     # dataset_text_field="text",
-    max_seq_length=None,  # 256, 512 등으로 수정할 수 있음.
+    max_seq_length=256,  # 256, 512 등으로 수정할 수 있음.
     tokenizer=tokenizer,
     args=training_params,
     packing=False,
@@ -103,5 +100,6 @@ trainer = SFTTrainer(
 
 trainer.train()
 
-trainer.model.save_pretrained("./dist/model")
-trainer.tokenizer.save_pretrained("./dist/model")
+# trainer.model.save_pretrained("./dist/model")
+# trainer.tokenizer.save_pretrained("./dist/model")
+trainer.save_model(new_model)

@@ -3,7 +3,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 # model_id = "beomi/Llama-3-Open-Ko-8B"
-model_id = "./dist/model"
+model_id = "./test/model"
 
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 model = AutoModelForCausalLM.from_pretrained(
@@ -21,12 +21,13 @@ pipeline = transformers.pipeline(
     tokenizer=tokenizer,
     # model_kwargs={"torch_dtype": torch.bfloat16},
     device="cuda",
-    max_new_tokens=2048,
+    max_new_tokens=256,
 )
 
-prompt = "벤탄쿠르의 근황"
+prompt = "벤탄쿠르의 근황은?"
 # pipe = pipeline(
 #     task="text-generation", model=model, tokenizer=tokenizer, max_length=200, text_inputs=prompt
 # )
-result = pipeline(prompt)
+
+result = pipeline(f"### Question: {prompt}\n")
 print(result)
